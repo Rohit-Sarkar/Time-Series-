@@ -1,0 +1,57 @@
+---
+title: "Chapter_1"
+author: "Rohit Sarkar"
+date: "10 March 2018"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+```{r}
+fmri = read.table("G:/My Data Science files/Times Series/Chapter 1/fmri.dat")
+par(mfrow=c(2,1)) # par() function is used to combine the plots mfrow=c(nrows,ncols)
+ts.plot(fmri[,2:5], lty=c(1,4), ylab='BOLD')
+ts.plot(fmri[,6:9], lty=c(1,4), ylab='BOLD')
+
+```
+
+```{r}
+x = matrix(read.table("G:/My Data Science files/Times Series/Chapter 1/eq5exp6.dat"), ncol=2)
+x_1 = unlist(x[,1])
+x_1 <- as.double(x_1)
+x_2 <- unlist(x[,2])
+x_2 <- as.double(x_2)
+par(mfrow=c(2,1))
+plot.ts(x_1, main="Earthquake", ylab="EQ5")
+plot.ts(x_2, main="Explosion", ylab="EXP6")
+
+```
+```{r}
+w = rnorm(550,0,1) # rnorm(n,mean,std)
+x = filter(w , filter=c(1,-.9), method='recursive')
+plot.ts(x[51:550])
+```
+```{r}
+set.seed(154)
+w = rnorm(200,0,1)
+x = cumsum(w)
+wd = w + .2
+xd = cumsum(wd)
+plot.ts(xd, ylim=c(-5,55))
+lines(x)
+lines(.2*(1:200), lty='dashed')
+```
+```{r}
+soi = read.csv('G:/My Data Science files/Times Series/Chapter 1/soi.dat')
+rec = read.csv('G:/My Data Science files/Times Series/Chapter 1/recruit.dat')
+par(mfrow=c(3,1))
+acf(soi , 50)
+acf(rec , 50)
+ccf(soi, rec, 50)
+
+```
